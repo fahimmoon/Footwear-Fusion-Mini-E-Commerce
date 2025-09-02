@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mini E-Commerce — Modern UI</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="" crossorigin="anonymous" />
+  <!-- Tiny inline favicon (prevents 404 for /favicon.ico) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👟</text></svg>">
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+  <!-- Header / Nav -->
+<header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-sm border-b border-gray-100">
+  <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-pink-500 rounded-lg flex items-center justify-center text-white font-bold shadow-md">
+        FF
+      </div>
+      <div>
+        <h1 class="text-lg font-semibold text-gray-900">Footwear Fusion</h1>
+        <p class="text-xs text-gray-500">Mini E-Commerce</p>
+      </div>
+    </a>
+
+    <!-- Search + Sort + View (Desktop) -->
+    <div class="flex-1 mx-6 hidden md:flex items-center gap-4">
+      <form id="search-form" class="flex-1 max-w-lg">
+        <label for="search-input" class="sr-only">Search products</label>
+        <div class="relative w-full">
+          <input id="search-input" type="search" placeholder="Search products, brands or tags..." class="w-full px-4 py-2 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500 text-gray-900" />
+        </div>
+      </form>
+
+      <div class="flex items-center gap-3">
+        <select id="sort-select" class="px-4 py-2 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500 text-gray-900">
+          <option value="new">Newest</option>
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+          <option value="popular">Most Popular</option>
+        </select>
+
+        <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
+          <button id="view-grid" class="px-3 py-2 text-gray-600 hover:bg-gray-50" title="Grid view" aria-pressed="true"><i class="fa-solid fa-grip"></i></button>
+          <button id="view-list" class="px-3 py-2 text-gray-600 hover:bg-gray-50" title="List view" aria-pressed="false"><i class="fa-solid fa-list"></i></button>
+        </div>
+      </div>
+  </div>
+
+    <div class="flex items-center gap-2">
+      <button
+        id="cart-button"
+        class="relative p-2.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition-all duration-150 shadow-md"
+        aria-label="Open cart"
+      >
+        <i class="fa-solid fa-basket-shopping"></i>
+        <span
+          id="cart-count"
+          class="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium"
+        >0</span>
+      </button>
+      <!-- Mobile Search Toggle -->
+      <button
+        id="mobile-search-toggle"
+        class="md:hidden p-2.5 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
+        title="Open search"
+      >
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-indigo-50 via-white to-pink-50 py-16">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center py-12">
+
+      <!-- Text Content -->
+      <div class="max-w-xl">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight">
+          Step into comfort. <br />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-500">
+            Step into style.
+          </span>
+        </h2>
+        <p class="mt-5 text-gray-600 text-lg leading-relaxed">
+          Discover the latest arrivals in footwear with curated styles, cushioned comfort, and sustainable options. Limited-time offers available.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a
+            href="#products"
+            class="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-indigo-700 hover:shadow-xl focus:ring-4 focus:ring-indigo-300 transition-all duration-200 font-medium"
+          >
+            Shop Products <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a
+            href="#offers"
+            class="inline-flex items-center gap-2 border-2 border-indigo-600 text-indigo-600 px-6 py-3 rounded-xl hover:bg-indigo-50 hover:shadow-md focus:ring-4 focus:ring-indigo-200 transition-all duration-200 font-medium"
+          >
+            View Offers
+          </a>
+        </div>
+      </div>
+
+      <!-- Image & Floating Cards -->
+      <div class="relative flex justify-center md:justify-end">
+        <!-- Main Hero Image -->
+        <div class="relative w-full max-w-md">
+          <img
+            src="https://images.unsplash.com/photo-1528701800489-476a78a8f7a6?w=1200&auto=format&fit=crop&q=80"
+            alt="Premium Footwear"
+            class="rounded-2xl shadow-2xl w-full h-80 object-cover transform transition-transform duration-500 hover:scale-105"
+          />
+        </div>
+
+        <!-- Floating Product Cards -->
+        <div class="absolute -bottom-8 left-4 md:left-8 space-y-4 animate-bounce-slow">
+          <!-- Card 1 -->
+          <div class="bg-white p-5 rounded-xl shadow-lg w-60 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+            <p class="text-xs font-medium text-indigo-600 uppercase tracking-wide">New Arrival</p>
+            <p class="font-bold text-gray-900 mt-1">AirFlex Runner</p>
+            <p class="text-indigo-600 font-bold mt-2 text-lg">$89.00</p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="bg-white p-5 rounded-xl shadow-lg w-60 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+            <p class="text-xs font-medium text-pink-600 uppercase tracking-wide">On Sale</p>
+            <p class="font-bold text-gray-900 mt-1">Urban Sneaker</p>
+            <p class="text-indigo-600 font-bold mt-2 text-lg">$59.00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decorative background elements -->
+  <div class="absolute top-20 -right-20 w-72 h-72 bg-indigo-200 rounded-full blur-3xl opacity-30"></div>
+  <div class="absolute bottom-10 -left-20 w-72 h-72 bg-pink-200 rounded-full blur-3xl opacity-30"></div>
+</section>
+
+  <!-- Promotional Banners -->
+  <section id="offers" class="container mx-auto px-4 mt-10">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    
+    <!-- Free Shipping -->
+    <div class="group bg-gradient-to-r from-yellow-400 to-orange-500 p-6 rounded-xl text-white shadow-lg hover:shadow-2xl transform transition-all duration-300 hover:-translate-y-1 hover:scale-105 flex items-center gap-5">
+      <div class="text-4xl text-white opacity-90 group-hover:rotate-12 transition-transform duration-300">
+        <i class="fa-solid fa-truck-fast"></i>
+      </div>
+      <div>
+        <p class="text-sm font-medium tracking-wide">FREE SHIPPING</p>
+        <p class="font-bold text-lg">On orders over $75</p>
+      </div>
+    </div>
+
+    <!-- Top Rated -->
+    <div class="group bg-gradient-to-r from-indigo-600 to-purple-600 p-6 rounded-xl text-white shadow-lg hover:shadow-2xl transform transition-all duration-300 hover:-translate-y-1 hover:scale-105 flex items-center gap-5">
+      <div class="text-4xl text-white opacity-90 group-hover:scale-110 transition-transform duration-300">
+        <i class="fa-solid fa-star"></i>
+      </div>
+      <div>
+        <p class="text-sm font-medium tracking-wide">TOP RATED</p>
+        <p class="font-bold text-lg">Customer Favorite Picks</p>
+      </div>
+    </div>
+
+    <!-- Secure Checkout -->
+    <div class="group bg-gradient-to-r from-green-500 to-teal-500 p-6 rounded-xl text-white shadow-lg hover:shadow-2xl transform transition-all duration-300 hover:-translate-y-1 hover:scale-105 flex items-center gap-5">
+      <div class="text-4xl text-white opacity-90 group-hover:scale-110 transition-transform duration-300">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div>
+        <p class="text-sm font-medium tracking-wide">SECURE</p>
+        <p class="font-bold text-lg">Protected Checkout</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+  <!-- Product Listings -->
+  <main id="products" class="container mx-auto px-4 mt-10" aria-labelledby="products-heading">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6">
+      <h3 id="products-heading" class="text-2xl font-bold text-gray-900">Products</h3>
+      <div class="text-sm text-gray-500 mt-2 sm:mt-0">Showing the latest</div>
+    </div>
+
+    <!-- Filter Bar: Categories and Tags -->
+    <section aria-label="Product filters" class="mb-8">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-sm font-medium text-gray-700">Filters</span>
+          <button
+            id="reset-filters"
+            class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-sm transition-colors"
+            aria-label="Reset all filters"
+          >
+            Reset
+          </button>
+        </div>
+        <div class="text-sm text-gray-500">
+          Showing: <span id="active-filters" class="font-medium text-gray-700">All</span>
+        </div>
+      </div>
+
+      <!-- Categories: Pill Buttons -->
+      <div id="filters-categories" class="flex flex-wrap gap-2 mb-4" role="group" aria-label="Categories">
+        <!-- Injected by JS -->
+      </div>
+
+      <!-- Tags: Compact Cloud -->
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div id="filters-tags" class="flex flex-wrap gap-2 flex-1" role="group" aria-label="Tags">
+          <!-- Injected by JS -->
+        </div>
+        <button
+          id="tags-toggle"
+          class="ml-2 mt-1 text-sm font-medium text-indigo-600 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-sm transition-colors hidden"
+          aria-expanded="false"
+        >
+          Show more
+        </button>
+      </div>
+    </section>
+
+    <!-- Skeleton Loaders (Shown while loading) -->
+    <div
+      id="product-skeletons"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6"
+      aria-hidden="true"
+      style="display: none;"
+    >
+      <!-- 8 Skeleton Cards -->
+      <!-- Each skeleton uses consistent structure -->
+      <!-- Repeating skeleton items -->
+      <template id="skeleton-template">
+        <div class="animate-pulse">
+          <div class="bg-gray-200 rounded-lg h-48 mb-3"></div>
+          <div class="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+          <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+        </div>
+      </template>
+      <!-- JS will clone from template; static fallback below -->
+      <div class="animate-pulse">
+        <div class="bg-gray-200 rounded-lg h-48 mb-3"></div>
+        <div class="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+        <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+      </div>
+      <div class="animate-pulse">
+        <div class="bg-gray-200 rounded-lg h-48 mb-3"></div>
+        <div class="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+        <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+      </div>
+      <div class="animate-pulse">
+        <div class="bg-gray-200 rounded-lg h-48 mb-3"></div>
+        <div class="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+        <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+      </div>
+      <div class="animate-pulse">
+        <div class="bg-gray-200 rounded-lg h-48 mb-3"></div>
+        <div class="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+        <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+      </div>
+      <div class="animate-pulse">
+        <div class="bg-gray-200 rounded-lg h-48 mb-3"></div>
+        <div class="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+        <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+      </div>
+      <div class="animate-pulse">
+        <div class="bg-gray-200 rounded-lg h-48 mb-3"></div>
+        <div class="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+        <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+      </div>
+      <div class="animate-pulse">
+        <div class="bg-gray-200 rounded-lg h-48 mb-3"></div>
+        <div class="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+        <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+      </div>
+    </div>
+
+    <!-- Product grid — JS injects items into #product-list -->
+    <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6" role="list" aria-label="Product results">
+      <!-- Products injected by JS -->
+    </div>
+
+
+    <div class="mt-8 flex justify-center">
+      <button id="load-more-button" class="px-6 py-3 bg-indigo-600 text-white rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-300" aria-label="Load more products">Load more</button>
+    </div>
+  </main>
+
+
+  <section id="featured" class="container mx-auto px-4 mt-12" aria-labelledby="featured-heading">
+    <div class="flex items-center justify-between mb-4">
+      <h3 id="featured-heading" class="text-2xl font-bold">Featured Picks</h3>
+      <a href="#featured" class="text-sm text-indigo-600">See all</a>
+    </div>
+    <div id="featured-list" class="flex gap-4 overflow-x-auto pb-4" role="list" aria-label="Featured products">
+
+    </div>
+  </section>
+
+  <section id="bestsellers" class="container mx-auto px-4 mt-8" aria-labelledby="bestsellers-heading">
+    <div class="flex items-center justify-between mb-4">
+      <h3 id="bestsellers-heading" class="text-2xl font-bold">Best Sellers</h3>
+      <a href="#bestsellers" class="text-sm text-indigo-600">See all</a>
+    </div>
+    <div id="bestsellers-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" role="list" aria-label="Best seller products">
+
+    </div>
+  </section>
+
+  <section id="new-arrivals" class="container mx-auto px-4 mt-8" aria-labelledby="new-arrivals-heading">
+    <div class="flex items-center justify-between mb-4">
+      <h3 id="new-arrivals-heading" class="text-2xl font-bold">New Arrivals</h3>
+      <a href="#new-arrivals" class="text-sm text-indigo-600">See all</a>
+    </div>
+    <div id="newarrivals-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" role="list" aria-label="New arrival products">
+
+    </div>
+  </section>
+
+
+  <section id="categories" class="container mx-auto px-4 mt-10" aria-labelledby="categories-heading">
+    <div class="flex items-center justify-between mb-4">
+      <h3 id="categories-heading" class="text-2xl font-bold">Shop by Category</h3>
+      <a href="#categories" class="text-sm text-indigo-600">See all</a>
+    </div>
+    <div id="categories-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" role="list" aria-label="Categories">
+ 
+    </div>
+  </section>
+
+
+  <section id="testimonials" class="container mx-auto px-4 mt-12" aria-labelledby="testimonials-heading">
+    <h3 id="testimonials-heading" class="text-2xl font-bold mb-6">What customers say</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white p-6 rounded-lg shadow">
+        <p class="text-gray-600">"Comfortable shoes and fast shipping. Highly recommended!"</p>
+        <div class="mt-4 text-sm font-semibold">— Alex R.</div>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow">
+        <p class="text-gray-600">"Great value for the price, will buy again."</p>
+        <div class="mt-4 text-sm font-semibold">— Priya K.</div>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow">
+        <p class="text-gray-600">"Stylish and durable. The sizing guide was accurate."</p>
+        <div class="mt-4 text-sm font-semibold">— Mateo S.</div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="newsletter" class="container mx-auto px-4 mt-12 mb-16">
+    <div class="bg-indigo-600 text-white rounded-lg p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <h4 class="text-2xl font-bold">Join our newsletter</h4>
+        <p class="text-indigo-100 mt-1">Get 10% off your first order and be the first to know about new arrivals.</p>
+      </div>
+      <form id="newsletter-form" class="flex gap-2 w-full md:w-auto">
+        <input id="newsletter-email" type="email" required placeholder="Your email" class="px-4 py-3 rounded-md text-gray-800" />
+        <button type="submit" class="bg-white text-indigo-600 px-4 py-3 rounded-md font-semibold">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+ 
+  <aside id="cart-panel" class="fixed inset-y-0 right-0 w-full md:w-96 bg-white shadow-xl transform translate-x-full transition-transform duration-300 z-50">
+    <div class="p-4 flex items-center justify-between border-b">
+      <h4 class="font-semibold">Your Cart</h4>
+      <button id="close-cart" class="text-gray-500 hover:text-gray-800"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="p-4 flex-1 overflow-auto" id="cart-items">
+      <!-- cart items injected by JS -->
+    </div>
+    <div class="p-4 border-t">
+      <div class="flex items-center justify-between mb-4">
+        <div class="text-sm text-gray-600">Subtotal</div>
+        <div id="cart-total" class="font-bold text-lg">$0.00</div>
+      </div>
+      <button id="checkout-button" class="w-full bg-indigo-600 text-white py-3 rounded-md hover:bg-indigo-700">Proceed to Checkout</button>
+    </div>
+  </aside>
+
+
+  <footer class="mt-16 bg-white border-t">
+    <div class="container mx-auto px-4 py-8 text-sm text-gray-600">
+      <div class="flex items-center justify-between">
+        <div>&copy; 2025 Footwear Fusion</div>
+        <div class="flex gap-4">
+          <a href="#" class="hover:text-indigo-600">Privacy</a>
+          <a href="#" class="hover:text-indigo-600">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <div id="mobile-search-overlay" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 p-4">
+    <div class="bg-white rounded-lg w-full max-w-md p-4">
+      <div class="flex items-center gap-2">
+  <input id="mobile-search-input" type="search" placeholder="Search products..." class="w-full px-4 py-2 border rounded-md" />
+  <button id="mobile-search-close" class="px-3 py-2 text-gray-600" aria-label="Close search"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="quick-view-modal" aria-hidden="true" tabindex="-1">
+    <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="quick-view-title">
+      <div class="p-3 flex items-center justify-between border-b">
+        <h4 id="quick-view-title" class="font-semibold">Quick view</h4>
+        <button id="quick-view-close" class="text-gray-600 p-2" aria-label="Close quick view"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="quick-view-content" class="modal-body">
+
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

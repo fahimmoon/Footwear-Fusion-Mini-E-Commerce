@@ -1,0 +1,22 @@
+{
+  "name": "mini-ecommerce",
+  "version": "1.0.0",
+  "description": "A small e-commerce website where users can browse products, add them to a cart, and simulate a checkout process.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "author": "",
+  "license": "ISC"
+}
